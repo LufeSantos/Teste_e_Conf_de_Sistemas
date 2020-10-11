@@ -1,5 +1,5 @@
 Tests for the sort function
 
-## Test TODO list
-- Check if the func didnt change any value
+## Tests list
+- Check if the sort functions didn't change any value
 - Check if the elements are in order
