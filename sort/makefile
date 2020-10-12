@@ -72,3 +72,4 @@ clean:
 
 ci: CFLAGS += -Werror
 ci: default
+	
