@@ -10,7 +10,7 @@ static void swap(int* v1, int* v2)
   *v2 = aux;
 }
 
-void sort (int *v, int size)
+void sort(int *v, int size)
 {
   for(int i=0; i<size; i++)
     for(int j=0; j<size-1; j++)

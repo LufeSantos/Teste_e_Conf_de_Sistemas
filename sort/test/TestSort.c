@@ -1,20 +1,20 @@
 #include "unity.h"
-#include "sort.h"
 #include <stdlib.h>
 #include <stdbool.h>
-#include <time.h>
 
-#define SIZE_ARRAY 5
+#include "sort.h"
+
+#define SIZE_ARRAY 10000
 
 static int* ARRAY1;
 static int* ARRAY2;
 
-// init two identical arrays
+// init two identical arrays with interleaved positive and negative values
 static void initArrays(void)
 {
     for(int i=0;i<SIZE_ARRAY;i++){
-      ARRAY1[i] = rand();
-      ARRAY1[i] = rand()%2 == 0 ? ARRAY1[i] : ARRAY1[i]*-1;
+      ARRAY1[i] = SIZE_ARRAY-1-i;
+      ARRAY1[i] = i%2 == 0 ? ARRAY1[i] : ARRAY1[i]*-1; // interleaves positive and negative values
       ARRAY2[i] = ARRAY1[i];
     }
 }
@@ -42,9 +42,27 @@ static bool checkArraysElements(void)
   return flag;
 }
 
+/*
+// test the checkArraysElements function
+void testCompareArraysFunc(void)
+{
+  ARRAY2[0] = ARRAY1[SIZE_ARRAY-1];
+  ARRAY2[SIZE_ARRAY-1] = ARRAY1[0];
+  TEST_ASSERT_MESSAGE(checkArraysElements(),"Error in compareArray function");
+}
+*/
+
+// check if ARRAY1 is in the correct order
+static bool isArray1InCorrectOrder(void){
+  for(int i=0; i<SIZE_ARRAY-1; i++)
+    if(ARRAY1[i]>ARRAY1[i+1])
+      return false;
+
+  return true;
+}
+
 void setUp(void)
 {
-  srand(time(NULL));
   ARRAY1 = malloc(sizeof(int)*SIZE_ARRAY);
   ARRAY2 = malloc(sizeof(int)*SIZE_ARRAY);
   initArrays();
@@ -56,25 +74,37 @@ void tearDown(void)
   free(ARRAY2);
 }
 
-// test the checkArraysElements function
-void testCompareArraysFunc(void)
-{
-  int aux = ARRAY2[0];
-  ARRAY2[0] = ARRAY2[SIZE_ARRAY-1];
-  ARRAY2[SIZE_ARRAY-1] = aux;
-  TEST_ASSERT_MESSAGE(checkArraysElements(),"Error in compareArray function");
-}
+/************************/
+/* SORT FUNCTIONS TESTS */
+/************************/
 
 // check if the sort function changed any value of the array
 void testCheckIfValuesWereChanged(void)
 {
   sort(ARRAY1,SIZE_ARRAY);
-  TEST_ASSERT_MESSAGE(checkArraysElements(),"Sort functions changed the values");
+  TEST_ASSERT_MESSAGE(checkArraysElements(),"Sort function changed the values");
 }
 
 // check if the restult array is in the correct order
-void testCheckOrder(void){
+void testArrayOrder(void){
   sort(ARRAY1,SIZE_ARRAY);
-  for(int i=0; i<SIZE_ARRAY-1; i++)
-    TEST_ASSERT_MESSAGE(ARRAY1[i]<=ARRAY1[i+1], "Array is not in order");
-};
+  TEST_ASSERT_MESSAGE(isArray1InCorrectOrder(), "Array is not in order");
+}
+
+// check if the sort function changed a single value array
+void testSingleValue(void)
+{
+  sort(ARRAY1,1);
+  TEST_ASSERT_EQUAL_MESSAGE(ARRAY2[0],ARRAY1[0],"Sort function changes single value array");
+}
+
+// check if the sort function works with only zeros array
+void testOnlyZerosValues(void)
+{
+    for(int i=0; i<SIZE_ARRAY; i++){
+      ARRAY1[i]=0;
+      ARRAY2[i]=0;
+    }
+    sort(ARRAY1,SIZE_ARRAY);
+    TEST_ASSERT_MESSAGE(checkArraysElements(),"Sort function changed a zero value");
+}

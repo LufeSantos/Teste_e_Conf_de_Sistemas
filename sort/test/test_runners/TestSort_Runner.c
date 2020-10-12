@@ -30,14 +30,14 @@
 #include "sort.h"
 #include <stdlib.h>
 #include <stdbool.h>
-#include <time.h>
 
 /*=======External Functions This Runner Calls=====*/
 extern void setUp(void);
 extern void tearDown(void);
-extern void testCompareArraysFunc(void);
 extern void testCheckIfValuesWereChanged(void);
-extern void testCheckOrder(void);
+extern void testArrayOrder(void);
+extern void testSingleValue(void);
+extern void testOnlyZerosValues(void);
 
 
 /*=======Suite Setup=====*/
@@ -72,9 +72,10 @@ int main(void)
 {
   suite_setup();
   UnityBegin("test/TestSort.c");
-  RUN_TEST(testCompareArraysFunc, 60);
-  RUN_TEST(testCheckIfValuesWereChanged, 69);
-  RUN_TEST(testCheckOrder, 76);
+  RUN_TEST(testCheckIfValuesWereChanged, 82);
+  RUN_TEST(testArrayOrder, 89);
+  RUN_TEST(testSingleValue, 95);
+  RUN_TEST(testOnlyZerosValues, 102);
 
   return suite_teardown(UnityEnd());
 }
