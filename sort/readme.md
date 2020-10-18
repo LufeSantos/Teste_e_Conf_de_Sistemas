@@ -1,7 +1,7 @@
-# Tests and implementation of the sort function
-To run the tests just use the command `make`
-## Tests list
-- Check if the sort function don't change any value
-- Test array order
-- Test single value array
-- Test only zeros array
+# Testes e implementação da função 'Sort'
+Para rodar os teste use o comando `make`
+## Lista de Testes
+- Testa se a função sort não altera nenhum valor
+- Testa ordem do vetor
+- Testa vetor com apenas uma posição
+- Testa vetor com apenas zeros
