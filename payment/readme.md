@@ -16,4 +16,4 @@ Para rodar os testes use o comando `make`
 | 1000.52 | "aposentado" | 0 |
 | 00.00 | "regular" | 1 |
 | 99999.01 | "regular" | 1 |
-| 5000.63 | "regular" | 2 |
+| 5000.63 | "teste" | 2 |
