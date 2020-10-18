@@ -1,10 +1,13 @@
 #include "unity.h"
+#include "unity_fixture.h"
 #include <stdlib.h>
 #include <stdbool.h>
 
 #include "sort.h"
 
 #define SIZE_ARRAY 10000
+
+TEST_GROUP(Sort);
 
 static int* ARRAY1;
 static int* ARRAY2;
@@ -61,14 +64,14 @@ static bool isArray1InCorrectOrder(void){
   return true;
 }
 
-void setUp(void)
+TEST_SETUP(Sort)
 {
   ARRAY1 = malloc(sizeof(int)*SIZE_ARRAY);
   ARRAY2 = malloc(sizeof(int)*SIZE_ARRAY);
   initArrays();
 }
 
-void tearDown(void)
+TEST_TEAR_DOWN(Sort)
 {
   free(ARRAY1);
   free(ARRAY2);
@@ -79,27 +82,28 @@ void tearDown(void)
 /************************/
 
 // check if the sort function changed any value of the array
-void testCheckIfValuesWereChanged(void)
+TEST(Sort, testCheckIfValuesWereChanged)
 {
   sort(ARRAY1,SIZE_ARRAY);
   TEST_ASSERT_MESSAGE(checkArraysElements(),"Sort function changed the values");
 }
 
 // check if the restult array is in the correct order
-void testArrayOrder(void){
+TEST(Sort, testArrayOrder)
+{
   sort(ARRAY1,SIZE_ARRAY);
   TEST_ASSERT_MESSAGE(isArray1InCorrectOrder(), "Array is not in order");
 }
 
 // check if the sort function changed a single value array
-void testSingleValue(void)
+TEST(Sort, testSingleValue)
 {
   sort(ARRAY1,1);
   TEST_ASSERT_EQUAL_MESSAGE(ARRAY2[0],ARRAY1[0],"Sort function changes single value array");
 }
 
 // check if the sort function works with only zeros array
-void testOnlyZerosValues(void)
+TEST(Sort, testOnlyZerosValues)
 {
     for(int i=0; i<SIZE_ARRAY; i++){
       ARRAY1[i]=0;
