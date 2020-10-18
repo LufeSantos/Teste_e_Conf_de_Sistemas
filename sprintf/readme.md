@@ -1,1 +1,1 @@
-Tests for the sprintf function
+Testes para a função 'sprintf'
